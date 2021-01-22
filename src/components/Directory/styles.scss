@@ -1,0 +1,36 @@
+.item {
+	position: relative;
+	width: 50%;
+	height: 599px;
+	float: left;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.3);
+		width: 140px;
+		height: 100px;
+		z-index: 1;
+	}
+	a {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		-webkit-transform: translate(-50%, -50%);
+		-moz-kit-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		font-size: 20px;
+		line-height: 1;
+		font-weight: 400;
+		text-transform: uppercase;
+		background: white;
+		z-index: 2;
+		padding: 8px 10px;
+		border: 1px solid black;
+	}
+}
