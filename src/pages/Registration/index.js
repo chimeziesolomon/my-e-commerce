@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import Footer from '../../components/Footer';
-
+import Signup from './../../components/Signup';
 class Registration extends Component {
 	render() {
 		return (
 			<div>
 				<div>
-					<h1>my registration</h1>
+					<Signup />
 				</div>
-				<Footer />
 			</div>
 		);
 	}
