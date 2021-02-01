@@ -1,7 +1,11 @@
 .footer {
-	.wrap {
-		max-width: 1449px;
-		padding: 20px 10px;
-		margin: 0 auto;
-	}
+  position: fixed;
+  width: 100%;
+  bottom: 20px;
+
+  .wrap {
+    max-width: 1449px;
+    padding: 20px 10px;
+    margin: 0 auto;
+  }
 }
