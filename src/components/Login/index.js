@@ -3,7 +3,7 @@ import './styles.scss';
 import AuthWrapper from '../AuthWrapper';
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
-import { signInWithGoogle, auth } from '../../firebase/utils';
+import { auth } from '../../firebase/utils';
 
 const initialState = {
   email: '',
@@ -61,7 +61,7 @@ class Login extends Component {
             <Button type="submit">Login</Button>
             <div className="socialSignin">
               <div className="row">
-                <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+                <Button onClick={alert}>Sign in with Google</Button>
               </div>
             </div>
           </form>

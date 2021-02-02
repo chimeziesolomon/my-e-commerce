@@ -7,12 +7,10 @@ import {
 } from 'react-router-dom';
 import './default.scss';
 import Recovery from './pages/Recovery';
-import { auth, handleUserProfile } from './firebase/utils';
+import { auth } from './firebase/utils';
 import Homepage from './pages/Homepage';
-import MainLayout from './layouts/MainLayout';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import HomepageLayout from './layouts/HomepageLayout';
 import Footer from './components/Footer';
 
 import Header from './components/Header';
@@ -31,21 +29,28 @@ class App extends Component {
   authListener = null;
 
   componentDidMount() {
-    this.authListener = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
-        const userRef = await handleUserProfile(userAuth);
-        userRef.onSnapshot((snapshot) => {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data(),
-            },
-          });
-        });
+    this.authListener = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        this.setState({ currentUser: user });
+        localStorage.setItem('user', user.uid);
+      } else {
+        this.setState({ currentUser: null });
+        localStorage.removeItem('user');
       }
-      this.setState({
-        ...initialState,
-      });
+      // if (userAuth) {
+      //   const userRef = await handleUserProfile(userAuth);
+      //   userRef.onSnapshot((snapshot) => {
+      //     this.setState({
+      //       currentUser: {
+      //         id: snapshot.id,
+      //         ...snapshot.data(),
+      //       },
+      //     });
+      //   });
+      // }
+      // this.setState({
+      //   ...initialState,
+      // });
     });
   }
 
