@@ -43,7 +43,7 @@ class Login extends Component {
     return (
       <AuthWrapper>
         <div className="formWrap">
-          <form onSubmit={() => this.handleSubmit()}>
+          <form onSubmit={this.handleSubmit}>
             <FormInput
               type="email"
               name="email"

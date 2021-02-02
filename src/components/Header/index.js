@@ -27,7 +27,7 @@ const Header = (props) => {
           {!currentUser && (
             <ul>
               <li>
-                <Link to="/signup">Register</Link>
+                <Link to="/signup">Signup</Link>
               </li>
               <li>
                 <Link to="/login">Login</Link>
