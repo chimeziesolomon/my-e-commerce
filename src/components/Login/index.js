@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './styles.scss';
 import AuthWrapper from '../AuthWrapper';
 import FormInput from '../forms/FormInput';
@@ -67,6 +68,9 @@ class Login extends Component {
 							<div className="row">
 								<Button onClick={alert}>Sign in with Google</Button>
 							</div>
+						</div>
+						<div className="links">
+							<Link to="/recovery">Reset Password</Link>
 						</div>
 					</form>
 				</div>
