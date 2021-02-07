@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './default.scss';
 import { connect } from 'react-redux';
 import Recovery from './pages/Recovery';
-import { auth } from './firebase/utils';
+import { auth, handleUserProfile } from './firebase/utils';
 import Homepage from './pages/Homepage';
 import Login from './components/Login';
 import Signup from './components/Signup';
@@ -15,66 +15,48 @@ import Header from './components/Header';
 //	currentUser: null
 //};
 
-class App extends Component {
-	//constructor(props) {
-	//	super(props);
-	//	this.state = {
-	//		...initialState
-	//	};
-	//}
-	authListener = null;
+const App = (props) => {
+	const { setCurrentUser, currentUser } = props;
 
-	componentDidMount() {
-		const { setCurrentUser } = this.props;
-
-		this.authListener = auth.onAuthStateChanged(async (user) => {
-			if (user) {
-				this.setState({ currentUser: user });
-				localStorage.setItem('user', user.uid);
-			} else {
-				this.setState({ currentUser: null });
-				localStorage.removeItem('user');
+	useEffect(() => {
+		const authListener = auth.onAuthStateChanged(async (userAuth) => {
+			//if (user) {
+			//	this.setState({ currentUser: user });
+			//	localStorage.setItem('user', user.uid);
+			//} else {
+			//	this.setState({ currentUser: null });
+			//	localStorage.removeItem('user');
+			//}
+			if (userAuth) {
+				//	const userRef = await handleUserProfile(userAuth);
+				//	userRef.onSnapshot((snapshot) => {
+				//setCurrentUser({
+				//	id: snapshot.id,
+				//	...snapshot.data()
+				//});
+				//	});
 			}
-			// if (userAuth) {
-			//   const userRef = await handleUserProfile(userAuth);
-			//   userRef.onSnapshot((snapshot) => {
-			//     this.setState({
-			//       currentUser: {
-			//         id: snapshot.id,
-			//         ...snapshot.data(),
-			//       },
-			//     });
-			//   });
-			// }
-			// this.setState({
-			//   ...initialState,
-			//setCurrentUser(userAuth);
-			// });
 		});
-	}
+		return () => {
+			authListener();
+		};
+	}, []);
+	return (
+		<Router>
+			<div className="app">
+				<Header />
+				<Switch>
+					<Route exact path="/" render={() => <Homepage />} />
+					<Route path="/signup" render={() => (currentUser ? <Redirect to="/" /> : <Signup />)} />
+					<Route path="/login" render={() => (currentUser ? <Redirect to="/" /> : <Login />)} />
+					<Route path="/recovery" render={() => <Recovery />} />
+				</Switch>
+				<Footer />
+			</div>
+		</Router>
+	);
+};
 
-	componentWillUnmount() {
-		this.authListener();
-	}
-
-	render() {
-		const { currentUser } = this.props;
-		return (
-			<Router>
-				<div className="app">
-					<Header />
-					<Switch>
-						<Route exact path="/" render={() => <Homepage />} />
-						<Route path="/signup" render={() => (currentUser ? <Redirect to="/" /> : <Signup />)} />
-						<Route path="/login" render={() => (currentUser ? <Redirect to="/" /> : <Login />)} />
-						<Route path="/recovery" render={() => <Recovery />} />
-					</Switch>
-					<Footer />
-				</div>
-			</Router>
-		);
-	}
-}
 const mapStateToProps = ({ user }) => ({
 	currentUser: user.currentUser
 });
