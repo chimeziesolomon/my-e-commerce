@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Dashboard from './pages/Dashboard';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './default.scss';
 import { connect } from 'react-redux';
@@ -50,6 +51,7 @@ const App = (props) => {
 					<Route path="/signup" render={() => (currentUser ? <Redirect to="/" /> : <Signup />)} />
 					<Route path="/login" render={() => (currentUser ? <Redirect to="/" /> : <Login />)} />
 					<Route path="/recovery" render={() => <Recovery />} />
+					<Route path="/dashboard" render={() => <Dashboard />} />
 				</Switch>
 				<Footer />
 			</div>

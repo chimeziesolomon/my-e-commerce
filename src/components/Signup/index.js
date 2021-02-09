@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './styles.scss';
 import AuthWrapper from './../AuthWrapper';
-import { auth } from './../../firebase/utils';
+import { auth, handleUserProfile } from './../../firebase/utils';
 import FormInput from './../forms/FormInput';
 import Button from './../forms/Button';
 
