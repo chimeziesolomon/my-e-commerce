@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import Dashboard from './pages/Dashboard';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './default.scss';
+// hoc
+import withAuth from './hoc/withAuth';
 import { connect } from 'react-redux';
 import Recovery from './pages/Recovery';
 import { auth, handleUserProfile } from './firebase/utils';
@@ -48,10 +50,18 @@ const App = (props) => {
 				<Header />
 				<Switch>
 					<Route exact path="/" render={() => <Homepage />} />
-					<Route path="/signup" render={() => (currentUser ? <Redirect to="/" /> : <Signup />)} />
-					<Route path="/login" render={() => (currentUser ? <Redirect to="/" /> : <Login />)} />
+					<Route path="/signup" render={() => <Signup />} />
+					<Route path="/login" render={() => <Login />} />
 					<Route path="/recovery" render={() => <Recovery />} />
-					<Route path="/dashboard" render={() => <Dashboard />} />
+					<Route
+						path="/dashboard"
+						render={() => (
+							<withAuth>
+								{' '}
+								<Dashboard />{' '}
+							</withAuth>
+						)}
+					/>
 				</Switch>
 				<Footer />
 			</div>
