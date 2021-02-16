@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './styles.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser } from './../../redux/User/user.actions';
+import { resetAllAuthForms, signUpUser } from './../../redux/User/user.actions';
 import { withRouter } from 'react-router-dom';
 import AuthWrapper from './../AuthWrapper';
 import FormInput from './../forms/FormInput';
@@ -24,6 +24,7 @@ const Signup = (props) => {
 		() => {
 			if (signUpSuccess) {
 				reset();
+				dispatch(resetAllAuthForms());
 				props.history.push('/');
 			}
 		},

@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import './styles.scss';
-import { signInUser } from './../../redux/User/user.actions';
+import { signInUser, signInWithGoogle, resetAllAuthForms } from './../../redux/User/user.actions';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthWrapper from '../AuthWrapper';
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
-import { signInWithGoogle } from '../../firebase/utils';
 
 const mapState = ({ user }) => ({
 	signInSuccess: user.signInSuccess
@@ -22,6 +21,7 @@ const Login = (props) => {
 		() => {
 			if (signInSuccess) {
 				resetForm();
+				dispatch(resetAllAuthForms());
 				props.history.push('/');
 			}
 		},
@@ -35,6 +35,10 @@ const Login = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		dispatch(signInUser({ email, password }));
+	};
+
+	const handleGoogleSignIn = () => {
+		dispatch(signInWithGoogle());
 	};
 
 	const configAuthWrapper = {
@@ -61,7 +65,7 @@ const Login = (props) => {
 					<Button type="submit">Login</Button>
 					<div className="socialSignin">
 						<div className="row">
-							<Button onClick={alert}>Sign in with Google</Button>
+							<Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
 						</div>
 					</div>
 					<div className="links">

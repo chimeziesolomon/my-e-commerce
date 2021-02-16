@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import './default.scss';
 // hoc
 import withAuth from './hoc/withAuth';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Recovery from './pages/Recovery';
 import { auth, handleUserProfile } from './firebase/utils';
 import Homepage from './pages/Homepage';
@@ -19,7 +19,7 @@ import Header from './components/Header';
 //};
 
 const App = (props) => {
-	const { setCurrentUser, currentUser } = props;
+	const disPatch = useDispatch();
 
 	useEffect(() => {
 		const authListener = auth.onAuthStateChanged(async (userAuth) => {
@@ -33,12 +33,13 @@ const App = (props) => {
 			if (userAuth) {
 				//	const userRef = await handleUserProfile(userAuth);
 				//	userRef.onSnapshot((snapshot) => {
-				//setCurrentUser({
+				//dispatch(setCurrentUser({
 				//	id: snapshot.id,
 				//	...snapshot.data()
-				//});
+				//}));
 				//	});
 			}
+			disPatch(setCurrentUser(userAuth));
 		});
 		return () => {
 			authListener();
@@ -69,11 +70,4 @@ const App = (props) => {
 	);
 };
 
-const mapStateToProps = ({ user }) => ({
-	currentUser: user.currentUser
-});
-
-const mapDispatchToProps = (dispatch) => ({
-	setCurrentUser: (user) => dispatch(setCurrentUser(user))
-});
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
